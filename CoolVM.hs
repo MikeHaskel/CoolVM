@@ -48,7 +48,7 @@ data Program =
     | Halt
 
 dataToProgram :: Data -> Program
-dataToProgram ~(ConsData (SymbolData ((["coolVM"], "Program"), command)) arguments) =
+dataToProgram ~(ConsData (SymbolData ((["CoolVM"], "Program"), command)) arguments) =
     case command of
         "context" -> Context
         "withContext" -> recurse2 WithContext
@@ -134,8 +134,8 @@ eval (CompareChar eChar1 eChar2) ctx =
     let (CharData char1) = eval eChar1 ctx
         (CharData char2) = eval eChar2 ctx
     in if char1 == char2
-       then SymbolData ((["std"], "Bool"), "true")
-       else SymbolData ((["std"], "Bool"), "false")
+       then SymbolData ((["CoolVM"], "Bool"), "true")
+       else SymbolData ((["CoolVM"], "Bool"), "false")
 eval (GeneralCategory eChar) ctx =
     let (CharData char) = eval eChar ctx
         gcString = case generalCategory char of
@@ -169,7 +169,7 @@ eval (GeneralCategory eChar) ctx =
             Surrogate -> "cs"
             PrivateUse -> "co"
             NotAssigned -> "cn"
-    in SymbolData ((["std"], "GeneralCategory"), gcString)
+    in SymbolData ((["CoolVM"], "GeneralCategory"), gcString)
 eval (Read eOnEOF eOnChar) ctx =
     let (AgentData onEOF) = eval eOnEOF ctx
         (LambdaData onChar) = eval eOnChar ctx
